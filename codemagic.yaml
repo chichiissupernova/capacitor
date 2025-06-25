@@ -1,0 +1,85 @@
+workflows:
+  capacitor-ios-app:
+    name: Capacitor iOS App
+    instance_type: mac_mini_m1
+    max_build_duration: 120
+    environment:
+      vars:
+        NODE_VERSION: 20
+        CAPACITOR_CLI_TELEMETRY_OPTOUT: 1
+      node: $NODE_VERSION
+      xcode: latest
+      cocoapods: default
+    cache:
+      cache_paths:
+        - $HOME/.npm
+        - node_modules
+        - ios/App/Pods
+    triggering:
+      events:
+        - push
+        - tag
+        - pull_request
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+        - pattern: develop
+          include: true
+          source: true
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Build web assets
+        script: |
+          npm run build
+      - name: Install Capacitor CLI
+        script: |
+          npm install -g @capacitor/cli
+      - name: Add iOS platform
+        script: |
+          npx cap add ios
+      - name: Sync Capacitor
+        script: |
+          npx cap sync ios
+      - name: Install iOS dependencies
+        script: |
+          cd ios/App
+          pod install
+      - name: Build iOS app
+        script: |
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -destination generic/platform=iOS \
+            -archivePath build/App.xcarchive \
+            clean archive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Create IPA file
+        script: |
+          cd ios/App
+          xcodebuild -exportArchive \
+            -archivePath build/App.xcarchive \
+            -exportPath build/ \
+            -exportOptionsPlist exportOptions.plist
+    artifacts:
+      - ios/App/build/**/*.xcarchive
+      - ios/App/build/**/*.ipa
+      - build/**
+      - dist/**
+    publishing:
+      app_store_connect:
+        # Configure App Store Connect publishing here when ready
+        # api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        # key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        # issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+      email:
+        recipients:
+          - terri@becomingsupernova.com
+        notify:
+          success: true
+          failure: true
