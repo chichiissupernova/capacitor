@@ -27,7 +27,7 @@
       cd ios
       echo "Current directory: $(pwd)"
       echo "Copying exportOptions.plist from project root..."
-      cp ../exportOptions.plist .
+      cp ../public/exportOptions.plist .
       echo "exportOptions.plist copied. Contents:"
       cat exportOptions.plist
       echo "File permissions:"
