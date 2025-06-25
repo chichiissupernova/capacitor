@@ -4,7 +4,6 @@ const config: CapacitorConfig = {
   appId: 'com.lovable.app',
   appName: 'chichi',
   webDir: 'dist',
-  bundledWebRuntime: false,
   ios: {
     path: 'ios',
     scheme: 'App'
