@@ -25,6 +25,30 @@
   - name: Create IPA file
     script: |
       cd ios
+      # Copy exportOptions.plist to the correct location if it doesn't exist
+      if [ ! -f "exportOptions.plist" ]; then
+        echo "Creating exportOptions.plist..."
+        cat > exportOptions.plist << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>method</key>
+	<string>development</string>
+	<key>teamID</key>
+	<string>YOUR_TEAM_ID</string>
+	<key>uploadBitcode</key>
+	<false/>
+	<key>uploadSymbols</key>
+	<false/>
+	<key>compileBitcode</key>
+	<false/>
+	<key>thinning</key>
+	<string>&lt;none&gt;</string>
+</dict>
+</plist>
+EOF
+      fi
       xcodebuild -exportArchive \
         -archivePath build/App.xcarchive \
         -exportPath build/ \
