@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   bundledWebRuntime: false,
   ios: {
-    path: 'ios/App',
+    path: 'ios',
     scheme: 'App'
   },
   server: {
