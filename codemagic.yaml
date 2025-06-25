@@ -14,10 +14,10 @@ workflows:
       node: $NODE_VERSION
       xcode: latest
       cocoapods: default
-      # Add code signing configuration
-      code_signing:
-        - ios_development
-        - ios_distribution
+    # Add code signing configuration at workflow level
+    code_signing:
+      - ios_development
+      - ios_distribution
     cache:
       cache_paths:
         - $HOME/.npm
