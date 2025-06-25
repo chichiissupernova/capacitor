@@ -77,11 +77,11 @@ workflows:
       - build/**
       - dist/**
     publishing:
-      app_store_connect:
-        # Configure App Store Connect publishing here when ready
-        # api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-        # key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        # issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+      # app_store_connect:
+      #   # Configure App Store Connect publishing here when ready
+      #   api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+      #   key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+      #   issuer_id: $APP_STORE_CONNECT_ISSUER_ID
       email:
         recipients:
           - terri@becomingsupernova.com
