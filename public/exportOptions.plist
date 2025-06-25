@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>method</key>
-	<string>debugging</string>
+	<string>development</string>
 	<key>uploadBitcode</key>
 	<false/>
 	<key>uploadSymbols</key>
@@ -13,7 +13,7 @@
 	<key>thinning</key>
 	<string>&lt;none&gt;</string>
 	<key>signingStyle</key>
-	<string>manual</string>
+	<string>automatic</string>
 	<key>teamID</key>
 	<string>T777LU387S</string>
 	<key>stripSwiftSymbols</key>

@@ -7,9 +7,17 @@ workflows:
       vars:
         NODE_VERSION: 20
         CAPACITOR_CLI_TELEMETRY_OPTOUT: 1
+        # Code signing variables - you'll need to add these in Codemagic UI
+        # XCODE_PROJECT: ios/App/App.xcodeproj
+        # XCODE_SCHEME: App
+        # BUNDLE_ID: com.lovable.app
       node: $NODE_VERSION
       xcode: latest
       cocoapods: default
+      # Add code signing configuration
+      code_signing:
+        - ios_development
+        - ios_distribution
     cache:
       cache_paths:
         - $HOME/.npm
@@ -52,10 +60,7 @@ workflows:
             -configuration Release \
             -destination generic/platform=iOS \
             -archivePath build/App.xcarchive \
-            clean archive \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+            clean archive
       - name: Create IPA file
         script: |
           cd ios/App
@@ -70,10 +75,7 @@ workflows:
           xcodebuild -exportArchive \
             -archivePath build/App.xcarchive \
             -exportPath build/ \
-            -exportOptionsPlist exportOptions.plist \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+            -exportOptionsPlist exportOptions.plist
     artifacts:
       - ios/App/build/**/*.xcarchive
       - ios/App/build/**/*.ipa
