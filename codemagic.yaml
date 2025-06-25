@@ -59,6 +59,14 @@ workflows:
       - name: Create IPA file
         script: |
           cd ios/App
+          echo "Current directory: $(pwd)"
+          echo "Listing files in current directory:"
+          ls -la
+          echo "Listing files in ../../public/:"
+          ls -la ../../public/
+          cp ../../public/exportOptions.plist . || { echo "Copy failed"; exit 1; }
+          echo "Listing files after copy:"
+          ls -la
           xcodebuild -exportArchive \
             -archivePath build/App.xcarchive \
             -exportPath build/ \
